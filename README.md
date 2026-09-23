@@ -1,5 +1,6 @@
 # COVID-19 Chest X-Ray Classification
 ### A Multi-Architecture Deep Learning Comparison
+**Sanjib Samadder** 
 
 ![Status](https://img.shields.io/badge/Status-Completed-2ECC71)
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
@@ -12,9 +13,9 @@
 ![Model](https://img.shields.io/badge/Model-RNN%20(LSTM)-6A6D6D)
 ![Task](https://img.shields.io/badge/Task-Image%20Classification-F7931E)
 
-**Sanjib Samadder** · Data Science Portfolio Project
 
-![Project banner](banner.png)
+
+![Project banner](Banner_image.png)
 
 A comparison of four neural network architectures — Dense, CNN, Deep CNN, and RNN
 (LSTM) — for classifying chest X-rays into **Covid**, **Normal**, or **Viral
