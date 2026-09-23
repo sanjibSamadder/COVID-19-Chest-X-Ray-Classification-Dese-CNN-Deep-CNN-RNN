@@ -2,6 +2,8 @@
 
 A comparison of four neural network architectures for classifying chest X-rays into **Covid**, **Normal**, or **Viral Pneumonia**, trained and evaluated identically on the same dataset for a fair benchmark.
 
+![Project Banner](banner.png)
+
 ## Dataset
 
 [COVID-19 Image Dataset](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset) (Kaggle) — 251 training images, 66 test images, 3 classes (Covid: 26, Normal: 20, Viral Pneumonia: 20 in the test set).
