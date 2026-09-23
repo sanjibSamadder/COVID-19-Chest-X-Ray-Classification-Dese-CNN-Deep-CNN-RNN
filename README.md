@@ -15,7 +15,7 @@
 
 
 
-![Banner](image/(Banner_image.jpeg)
+![Banner](image/Banner%20Image.jpeg)
 
 A comparison of four neural network architectures — Dense, CNN, Deep CNN, and RNN
 (LSTM) — for classifying chest X-rays into **Covid**, **Normal**, or **Viral
