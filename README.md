@@ -2,7 +2,7 @@
 
 A comparison of four neural network architectures for classifying chest X-rays into **Covid**, **Normal**, or **Viral Pneumonia**, trained and evaluated identically on the same dataset for a fair benchmark.
 
-![Project Banner](banner.png)
+![Banner](Banner_image.jpeg)
 
 ## Dataset
 
