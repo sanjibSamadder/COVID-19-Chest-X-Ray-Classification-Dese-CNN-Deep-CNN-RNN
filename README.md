@@ -190,7 +190,7 @@ the notebook.
 
 ## License
 
-**Dataset License:** the source dataset is provided on Kaggle for research and
+**Dataset License:** CC BY-SA 4.0 - the source dataset is provided on Kaggle for research and
 educational use -- see the
 [dataset page](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset)
 for full terms.
@@ -208,4 +208,4 @@ collaborative projects.
 
 [![Email](https://img.shields.io/badge/Email-skilled.sanjib%40gmail.com-red?logo=gmail)](mailto:skilled.sanjib@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-sanjibSamadder-181717?logo=github)](https://github.com/sanjibSamadder)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sanjib%20Samadder-0A66C2?logo=linkedin)](https://linkedin.com/in/sanjib-samadder)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sanjib%20Samadder-0A66C2?logo=linkedin)](https://www.linkedin.com/in/sanjibsamadder/)
