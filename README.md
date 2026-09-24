@@ -199,7 +199,7 @@ These results are an initial comparison, not a validated clinical finding.
 **License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — you are free to share and adapt the dataset, provided appropriate credit is given and any derivative works are distributed under the same license.
 
 **Citations:**
-- Pranav Raikote, *Covid-19 Image Dataset*, Kaggle. https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset
+- Pranav Raikote, *Covid-19 Image Dataset*, Kaggle.
 
 ## Future Work
 
