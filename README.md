@@ -114,9 +114,9 @@ Covid19-dataset/
 
 ```
 .
-├── COVID-19-Chest-X-Ray-Classification.ipynb   # Full analysis: pipeline, 4 models, conclusions
-├── Asset/                                       # Banner image used in this README
-├── Covid19-dataset/                             # Dataset (see Provenance & License above)
+├── COVID-19-Chest-X-Ray-Classification.ipynb      # Full analysis: pipeline, 4 models, conclusions
+├── Asset/                                         # Banner image used in this README
+├── Covid19-dataset/                               # Dataset (see Provenance & License above)
 │   ├── train/
 │   │   ├── Covid/
 │   │   ├── Normal/
@@ -125,12 +125,14 @@ Covid19-dataset/
 │       ├── Covid/
 │       ├── Normal/
 │       └── Viral Pneumonia/
-├── Training_history_jason/                      # Saved training curves (created when you run the notebook)
+├── Training_history_jason/                       # Saved training curves (created when you run the notebook)
 │   ├── dense_history.json
 │   ├── cnn_history.json
 │   ├── deep_cnn_history.json
 │   └── deep_rnn_history.json
-├── anaconda_projects/                           # Local Anaconda project files (git-ignored)
+├── anaconda_projects/                            # Local Anaconda project files (git-ignored)
+├──.gitignore
+├──.gitigno                         
 └── README.md
 ```
 
