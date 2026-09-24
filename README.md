@@ -1,3 +1,5 @@
+![Chest_Banner](Asset/Banner_image/Banner_image.jpeg)
+
 <div align="center">
 
 # COVID-19 Chest X-Ray Classification
