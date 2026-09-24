@@ -1,211 +1,197 @@
+<div align="center">
+
 # COVID-19 Chest X-Ray Classification
-### A Multi-Architecture Deep Learning Comparison
-**Sanjib Samadder** 
 
-![Status](https://img.shields.io/badge/Status-Completed-2ECC71)
+### A Comparative Study of Dense, CNN, Deep CNN and LSTM Architectures
+
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-Deep%20Learning-FF6F00?logo=tensorflow&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-API-D00000?logo=keras&logoColor=white)
-![Best Accuracy](https://img.shields.io/badge/Best%20Accuracy-88%25%20(CNN)-2ECC71)
-![Model](https://img.shields.io/badge/Model-Dense-1F4E79)
-![Model](https://img.shields.io/badge/Model-CNN-16A085)
-![Model](https://img.shields.io/badge/Model-Deep%20CNN-8E44AD)
-![Model](https://img.shields.io/badge/Model-RNN%20(LSTM)-6A6D6D)
-![Task](https://img.shields.io/badge/Task-Image%20Classification-F7931E)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?logo=tensorflow&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-metrics-F7931E?logo=scikitlearn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
 
+**3-class classification of chest X-rays: `Covid` · `Normal` · `Viral Pneumonia`**
 
-
-![Banner](Image/Banner_image.jpeg)
-
-A comparison of four neural network architectures — Dense, CNN, Deep CNN, and RNN
-(LSTM) — for classifying chest X-rays into **Covid**, **Normal**, or **Viral
-Pneumonia**, trained and evaluated identically on the same dataset for a fair,
-reproducible benchmark.
+</div>
 
 ---
 
-## Problem Statement
+## Overview
 
-Chest X-ray interpretation is a fast, low-cost screening tool for respiratory illness,
-but manual review requires clinical expertise and does not scale easily during periods
-of high patient volume. Automated classification offers a way to triage and flag
-likely cases for prioritized review — but the choice of model architecture materially
-affects both accuracy and the *type* of errors a system makes, which matters
-significantly in a diagnostic context.
+This project investigates whether a neural network can automatically distinguish
+**COVID-19**, **Viral Pneumonia** and **Normal** chest X-rays.
 
-This project addresses the question: **which neural network architecture is best
-suited to classifying chest X-rays into Covid, Normal, or Viral Pneumonia, and why —
-demonstrated with a controlled, like-for-like comparison rather than a single model
-built in isolation?**
+The dataset is small (251 training images), which makes it a good test of how
+architecture choices behave when data is limited. Instead of tuning one model, four
+architectures of increasing complexity are trained under **identical conditions**
+(same optimizer, learning rate, batch size and stopping rule) so that differences in
+results come from the architecture itself.
 
-The analysis uses the
-[COVID-19 Image Dataset](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset)
-(Kaggle), containing 251 training and 66 test chest X-ray images across the three
-classes (test set: Covid 26, Normal 20, Viral Pneumonia 20).
+## Key Result
 
----
+> A compact **3-block CNN** is the best model, reaching **90.91% test accuracy**
+> with balanced performance across all three classes, while using **17× fewer
+> parameters** than the Dense baseline. Adding more depth and regularization made
+> results much worse.
 
-## Methodology
+| Model | Parameters | Test accuracy | Macro F1 | Errors (of 66) |
+|---|---|---|---|---|
+| Dense baseline | 20.55 M | 84.85% | 0.84 | 10 |
+| **CNN** | **1.21 M** | **90.91%** | **0.90** | **6** |
+| Deep CNN (Regularized) | 1.57 M | 60.61% | 0.47 | 26 |
+| Deep RNN (LSTM) | 0.35 M | 69.70% | 0.68 | 20 |
 
-### 1. Data Pipeline
-Images were loaded directly from class-labeled folders (`train/Covid`,
-`train/Normal`, `train/Viral Pneumonia`, and matching `test/` folders) using Keras's
-`image_dataset_from_directory`, resized to 150×150, and pixel values rescaled from
-0-255 to 0-1. All four models were trained on this identical pipeline to keep the
-comparison fair.
+**Per-class recall** (share of true cases correctly identified):
 
-### 2. Model Architectures
-Four architectures were built and evaluated under identical training conditions
-(Adam optimizer, `categorical_crossentropy` loss, `EarlyStopping` with
-`patience=5` and `restore_best_weights=True`):
+| Model | Covid | Normal | Viral Pneumonia |
+|---|---|---|---|
+| Dense baseline | 0.88 | 0.75 | 0.90 |
+| **CNN** | **0.96** | **0.95** | 0.80 |
+| Deep CNN (Regularized) | 0.96 | 0.00 | 0.75 |
+| Deep RNN (LSTM) | 0.88 | 0.50 | 0.65 |
 
-| Model | Architecture | Rationale |
-|---|---|---|
-| **Dense (baseline)** | `Flatten` -> `Dense(300)` -> `Dense(100)` -> `Dense(3, softmax)` | No convolutional layers -- establishes a baseline with no spatial inductive bias |
-| **CNN** | 3x `Conv2D` + `MaxPooling2D` blocks -> `Dropout` -> `Dense` | Exploits local spatial patterns (edges, textures, opacities) native to image data |
-| **Deep CNN (regularized)** | 4x `Conv2D` + `BatchNormalization` + `MaxPooling2D`, heavier `Dropout` | Tests whether added depth and stronger regularization improve results on a small dataset |
-| **RNN (LSTM)** | Each image row treated as one time-step in a 150-step sequence, fed through stacked `LSTM` layers | Included as a deliberate architectural mismatch -- RNNs are built for sequential data, not static images -- to demonstrate *why* architecture-data fit matters with an actual result, not just an assertion |
+## Main Findings
 
-### 3. Evaluation
-Each model was evaluated on the full 66-image test set using per-class precision,
-recall, and F1-score, plus a confusion matrix -- not just a single overall accuracy
-number, since aggregate accuracy can hide a model performing well on one class while
-failing on another.
+1. **The simple CNN wins.** It made the fewest errors (6 of 66) and was the only
+   model with recall of at least 0.80 on every class.
+2. **Architecture mattered more than size or depth.** Ranking by accuracy was
+   CNN > Dense > LSTM > Deep CNN. Parameter count did not predict performance.
+3. **More depth and regularization hurt.** The Deep CNN fell from 90.91% to 60.61%,
+   never predicted the Normal class, and its validation loss climbed from 1.07 to
+   2.49 while training loss stayed low.
+4. **Spatial structure is what the task needs.** The Dense model ignores it, the
+   LSTM only partly keeps it, and the CNN exploits it directly, and results follow
+   that order.
+5. **Covid is the easiest class.** The hard boundary is **Normal vs Viral
+   Pneumonia**, where most remaining errors occur.
 
----
+## Models Compared
 
-## Results
+| # | Model | Idea | Architecture |
+|---|---|---|---|
+| 1 | **Dense baseline** | Treat every pixel independently | `Flatten` → `BatchNorm` → `Dense(300)` → `BatchNorm` → `Dense(100)` → `Dense(3)` |
+| 2 | **CNN** | Detect local patterns (edges, textures) | 3 × `Conv2D` + `MaxPool` (16→32→64) → `Dropout(0.5)` → `Dense(64)` → `Dense(3)` |
+| 3 | **Deep CNN (Regularized)** | Test whether more depth and regularization help | 4 × `Conv2D` + `BatchNorm` + `MaxPool` (32→64→128→128) → `Dropout` → `Dense(128)` → `Dropout` → `Dense(3)` |
+| 4 | **Deep RNN (LSTM)** | Read image rows as a sequence | `Reshape(150, 450)` → `LSTM(128)` → `LSTM(64)` → `Dense(128)` → `Dense(3)` |
 
-| Rank | Model | Accuracy | Macro F1 | Covid Recall | Normal Recall | Viral Pneumonia Recall |
-|---|---|---|---|---|---|---|
-| 1 | **CNN** | **0.88** | **0.87** | 1.00 | 0.80 | 0.80 |
-| 2 | Dense (baseline) | 0.71 | 0.69 | 0.88 | 0.70 | 0.50 |
-| 3 | RNN (LSTM) | 0.70 | 0.68 | 0.85 | 0.50 | 0.70 |
-| 4 | Deep CNN (regularized) | 0.39 | 0.19 | 1.00 | 0.00 | 0.00 |
+**Common training setup (identical for all four):**
 
-> **Deep CNN note:** this model collapsed during training -- it predicted "Covid" for
-> every single test image, regardless of true class. The 0.39 accuracy is an artifact
-> of Covid's share of the test set (26/66), not genuine skill (Normal and Viral
-> Pneumonia both score 0.00 precision/recall). This is most likely caused by
-> regularization that was too aggressive (dropout/BatchNorm combined with the added
-> depth) for a training set of only 251 images, and is reported here transparently as
-> a training issue to debug rather than a fair architectural result.
-
-**CNN was selected as the best model**, outperforming all three alternatives on every
-quality metric while producing the most balanced performance across all three classes.
-
----
-
-## 🏆 Best Model: CNN
-
-- **Highest, most balanced performance** -- leads on both accuracy (0.88) and macro F1
-  (0.87), with all three classes scoring F1 >= 0.80.
-- **Perfect Covid recall (1.00)** with precision 0.96 -- no missed Covid cases, which
-  matters most in a screening context.
-- **Errors land in the safer direction** -- remaining mistakes are between Normal and
-  Viral Pneumonia, not spilling into missed Covid cases.
-- **Stable training** -- validation loss drops quickly and stays flat, with no
-  overfitting or oscillation across epochs.
-- **Architecturally appropriate** -- convolutional layers naturally capture the local
-  spatial patterns (opacities, infiltrates) relevant to X-ray interpretation.
-
-**Why the other models fall short:**
-
-| Model | Limitation |
+| Setting | Value |
 |---|---|
-| Dense (baseline) | No spatial inductive bias -- every pixel treated independently, capping performance; particularly weak on Viral Pneumonia (0.50 recall) |
-| RNN (LSTM) | Sequence models are a structural mismatch for static images; the row-by-row sequence trick discards genuine 2D spatial structure, reflected in poor Normal-class recall (0.50) |
-| Deep CNN | Currently non-functional (see note above) -- likely fixable with lighter regularization and/or a lower learning rate, but not a valid comparison point as trained |
+| Image size | 150 × 150 RGB, pixels scaled to [0, 1] |
+| Batch size | 16 |
+| Loss | Categorical cross-entropy |
+| Optimizer | Adam, learning rate 0.0001 |
+| Max epochs | 30 |
+| Early stopping | Monitor `val_accuracy`, patience 5, restore best weights |
 
-Full per-model classification reports, confusion matrices, and training curves are in
-the notebook.
+## Dataset
 
----
+| Split | Images | Covid | Normal | Viral Pneumonia |
+|---|---|---|---|---|
+| Train | 251 | – | – | – |
+| Test | 66 | 26 | 20 | 20 |
+
+Images are read straight from class-named folders, so the expected layout is:
+
+```
+Covid19-dataset/
+├── train/
+│   ├── Covid/
+│   ├── Normal/
+│   └── Viral Pneumonia/
+└── test/
+    ├── Covid/
+    ├── Normal/
+    └── Viral Pneumonia/
+```
+
+> The dataset is **not included** in this repository. Download it separately and
+> place it as shown above. <!-- TODO: add dataset source link and licence -->
 
 ## Repository Structure
 
 ```
-Covid_XRay_Classification/
-├── README.md                             # This file
-├── banner.png                             # README banner image
-├── covid_xray_model_comparison.ipynb      # Full training, evaluation, and comparison notebook
-└── Covid19-dataset/
-    ├── train/
-    │   ├── Covid/
-    │   ├── Normal/
-    │   └── Viral Pneumonia/
-    └── test/
-        ├── Covid/
-        ├── Normal/
-        └── Viral Pneumonia/
+.
+├── COVID-19-Chest-X-Ray-Classification.ipynb   # Full analysis: pipeline, 4 models, conclusions
+├── Training_history_jason/                     # Saved training curves (created when you run the notebook)
+│   ├── dense_history.json
+│   ├── cnn_history.json
+│   ├── deep_cnn_history.json
+│   └── deep_rnn_history.json
+└── README.md
 ```
 
----
+## Getting Started
 
-## Environment & Reproducibility
-
-**Python version:** 3.10
-
-**Key packages:** tensorflow (or tensorflow-macos + tensorflow-metal on Apple
-Silicon), scikit-learn, numpy, pandas, matplotlib, seaborn, jupyter
+**1. Clone the repository**
 
 ```bash
-conda create -n tf_env python=3.10 -y
-conda activate tf_env
-pip install tensorflow-macos tensorflow-metal scikit-learn numpy jupyter ipykernel matplotlib seaborn pandas
+git clone https://github.com/sanjibSamadder/<your-repo-name>.git
+cd <your-repo-name>
 ```
 
-(Use `pip install tensorflow` instead of `tensorflow-macos`/`tensorflow-metal` on
-non-Apple-Silicon machines.)
+**2. Create an environment and install dependencies**
 
-**Data:** Download the dataset from
-[Kaggle](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset) and
-place it in the repository root, matching the folder structure above, before running
-the notebook.
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install tensorflow numpy scikit-learn jupyter
+```
 
----
+The notebook was developed with **Python 3.10** on an Apple M2 (TensorFlow with the
+Metal plugin), but it runs on CPU or any TensorFlow-supported GPU.
 
-## Usage
+**3. Point the notebook at your data**
 
-1. Download and place the dataset as shown in **Repository Structure** above.
-2. Update the `train_dir` / `test_dir` paths at the top of the notebook to point to
-   your local copy.
-3. Run all cells top to bottom.
+In the data pipeline cell, update the two paths to where you saved the dataset:
 
----
+```python
+train_dir = "/path/to/Covid19-dataset/train"
+test_dir  = "/path/to/Covid19-dataset/test"
+```
 
-## Next Steps
+**4. Run the notebook**
 
-- Debug and re-run the Deep CNN (lower dropout rate and/or learning rate, verify
-  BatchNormalization placement) for a fair 4-way comparison.
-- Try transfer learning (e.g. EfficientNetB0 or MobileNetV2 pretrained on ImageNet) as
-  a fifth comparison point -- likely to outperform the from-scratch CNN given the small
-  training set (251 images).
-- Replace the current test-as-validation setup with a proper train/validation/test
-  split, keeping the test set untouched until final reporting.
-- Given the small test set (66 images), consider k-fold cross-validation for a more
-  robust accuracy estimate.
+```bash
+jupyter notebook COVID-19-Chest-X-Ray-Classification.ipynb
+```
 
----
+Run the cells from top to bottom. The data pipeline cell must run first, because all
+four model cells depend on it.
 
-## License
+## Limitations
 
-**Dataset License:** CC BY-SA 4.0 - the source dataset is provided on Kaggle for research and
-educational use -- see the
-[dataset page](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset)
-for full terms.
+These results are an initial comparison, not a validated clinical finding.
 
-This project's own code and analysis (notebook, README, visualizations) are shared for
-portfolio and educational purposes. Feel free to reference or build on the methodology
-with attribution.
+- **The test set doubles as the validation set.** Early stopping and best-weight
+  restoration used the same 66 images later reported as test accuracy, so the scores
+  are **optimistically biased**.
+- **The test set is very small.** One image is worth about 1.5 percentage points, so
+  the 4-image gap between the CNN and Dense model could be chance.
+- **Each model was trained once.** Run-to-run variance is unknown, and the Deep CNN's
+  collapse may partly reflect a single unlucky initialization.
+- **No data augmentation and no hyperparameter tuning** were used.
+- **Explanations are hypotheses.** Reasons given for the Deep CNN and LSTM
+  underperforming fit the training curves but were not tested with ablations.
+- **Not for clinical use.** Nothing here supports diagnostic decisions.
 
----
+## Future Work
+
+- [ ] Create a proper train / validation / test split
+- [ ] Add k-fold cross-validation and repeated runs with different seeds
+- [ ] Add data augmentation and re-test the Deep CNN
+- [ ] Try transfer learning (e.g. ResNet, EfficientNet)
+- [ ] Run ablations on the Deep CNN to find what caused the collapse
+- [ ] Target the Normal / Viral Pneumonia boundary (class weights, Grad-CAM)
+
+## Author
 
 **Sanjib Samadder**
+Data Analyst · MSc Data Science, University of Leicester
 
-**📬 Let's connect!** I'm open to discussions about data science, machine learning, and
-collaborative projects.
+[GitHub](https://github.com/sanjibSamadder) · [Portfolio](https://sanjibsamadder.github.io) · [LinkedIn](https://www.linkedin.com/)
 
-[![Email](https://img.shields.io/badge/Email-skilled.sanjib%40gmail.com-red?logo=gmail)](mailto:skilled.sanjib@gmail.com)
-[![GitHub](https://img.shields.io/badge/GitHub-sanjibSamadder-181717?logo=github)](https://github.com/sanjibSamadder)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sanjib%20Samadder-0A66C2?logo=linkedin)](https://www.linkedin.com/in/sanjibsamadder/)
+## Disclaimer
+
+This project is for educational and portfolio purposes only. It is **not a medical
+device** and must not be used for diagnosis or clinical decision-making.
