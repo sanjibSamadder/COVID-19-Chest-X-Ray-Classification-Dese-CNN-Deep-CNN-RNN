@@ -132,7 +132,8 @@ Covid19-dataset/
 │   └── deep_rnn_history.json
 ├── anaconda_projects/                            # Local Anaconda project files (git-ignored)
 ├──.gitignore
-├──.gitigno                         
+├──.gitigno
+├──.DS_Store                        
 └── README.md
 ```
 
