@@ -213,9 +213,15 @@ These results are an initial comparison, not a validated clinical finding.
 ## Author
 
 **Sanjib Samadder**
-Data Analyst · MSc Data Science, University of Leicester
 
-[GitHub](https://github.com/sanjibSamadder) · [Portfolio](https://sanjibsamadder.github.io) · [LinkedIn](https://www.linkedin.com/)
+**📬 Let's connect!** I'm open to discussions about data science, machine learning, and collaborative projects.
+
+[![Email](https://img.shields.io/badge/Email-skilled.sanjib%40gmail.com-red?logo=gmail)](mailto:skilled.sanjib@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-sanjibSamadder-181717?logo=github)](https://github.com/sanjibSamadder)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sanjib%20Samadder-0A66C2?logo=linkedin)](https://linkedin.com/in/sanjib-samadder)
+
+**Happy Analyzing!** 📊
+
 
 ## Disclaimer
 
