@@ -107,8 +107,8 @@ Covid19-dataset/
     └── Viral Pneumonia/
 ```
 
-> The dataset is **not included** in this repository. Download it separately and
-> place it as shown above. <!-- TODO: add dataset source link and licence -->
+> The dataset is **included** in this repository. But you can also download it separately from here: [Kaggle COVID dataset](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset) 
+
 
 ## Repository Structure
 
