@@ -175,6 +175,17 @@ These results are an initial comparison, not a validated clinical finding.
   underperforming fit the training curves but were not tested with ablations.
 - **Not for clinical use.** Nothing here supports diagnostic decisions.
 
+## Provenance & License
+
+**Source:** University of Montreal. Dataset uploaded to Kaggle by Pranav Raikote — [Covid-19 Image Dataset](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset).
+
+**Collection methodology:** The COVID-19 and Normal images were collected from a publicly released GitHub account maintained by University of Montreal professors. The Viral Pneumonia images were sourced from the RSNA (Radiological Society of North America) website.
+
+**License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — you are free to share and adapt the dataset, provided appropriate credit is given and any derivative works are distributed under the same license.
+
+**Citations:**
+- Pranav Raikote, *Covid-19 Image Dataset*, Kaggle. https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset
+
 ## Future Work
 
 - [ ] Create a proper train / validation / test split
