@@ -1,3 +1,5 @@
+![Chest_Banner](Asset/Banner_image/Banner_image.jpeg)
+
 <div align="center">
 
 # COVID-19 Chest X-Ray Classification
@@ -113,11 +115,22 @@ Covid19-dataset/
 ```
 .
 ├── COVID-19-Chest-X-Ray-Classification.ipynb   # Full analysis: pipeline, 4 models, conclusions
-├── Training_history_jason/                     # Saved training curves (created when you run the notebook)
+├── Asset/                                       # Banner image used in this README
+├── Covid19-dataset/                             # Dataset (see Provenance & License above)
+│   ├── train/
+│   │   ├── Covid/
+│   │   ├── Normal/
+│   │   └── Viral Pneumonia/
+│   └── test/
+│       ├── Covid/
+│       ├── Normal/
+│       └── Viral Pneumonia/
+├── Training_history_jason/                      # Saved training curves (created when you run the notebook)
 │   ├── dense_history.json
 │   ├── cnn_history.json
 │   ├── deep_cnn_history.json
 │   └── deep_rnn_history.json
+├── anaconda_projects/                           # Local Anaconda project files (git-ignored)
 └── README.md
 ```
 
@@ -174,6 +187,17 @@ These results are an initial comparison, not a validated clinical finding.
 - **Explanations are hypotheses.** Reasons given for the Deep CNN and LSTM
   underperforming fit the training curves but were not tested with ablations.
 - **Not for clinical use.** Nothing here supports diagnostic decisions.
+
+## Provenance & License
+
+**Source:** University of Montreal. Dataset uploaded to Kaggle by Pranav Raikote — [Covid-19 Image Dataset](https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset).
+
+**Collection methodology:** The COVID-19 and Normal images were collected from a publicly released GitHub account maintained by University of Montreal professors. The Viral Pneumonia images were sourced from the RSNA (Radiological Society of North America) website.
+
+**License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — you are free to share and adapt the dataset, provided appropriate credit is given and any derivative works are distributed under the same license.
+
+**Citations:**
+- Pranav Raikote, *Covid-19 Image Dataset*, Kaggle. https://www.kaggle.com/datasets/pranavraikokte/covid19-image-dataset
 
 ## Future Work
 
